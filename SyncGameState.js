@@ -22,11 +22,11 @@ const MeowchemyCloudScript = {
       let tutorialState = userData.Data.TutorialState.Value;
       let coinsAmount = this.getCoinAmount("GP");
 
-      let stages = []; /*
+      let stages = [];
       stages.push(JSON.parse(userData.Data.Stage0.Value));
       stages.push(JSON.parse(userData.Data.Stage1.Value));
       stages.push(JSON.parse(userData.Data.Stage2.Value));
-      stages.push(JSON.parse(userData.Data.Stage3.Value));*/
+      stages.push(JSON.parse(userData.Data.Stage3.Value));
 
       let boosterLocal = this.getUserInventory();
       let boosters = boosterLocal.map((item) => {
