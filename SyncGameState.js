@@ -273,7 +273,11 @@ handlers.SyncGameState = function (args, context) {
 
   let serverCurrentSaveVersion = CloudScriptLib.getUserData(["SaveVersion"]);
 
-  if (undefined === serverCurrentSaveVersion.Data) {
+  if (
+    serverCurrentSaveVersion === null ||
+    undefined === serverCurrentSaveVersion.Data ||
+    undefined === serverCurrentSaveVersion.Data.SaveVersion.Value
+  ) {
     MeowchemyCloudScript.updateSyncGameState(args, context);
     return args;
   }
