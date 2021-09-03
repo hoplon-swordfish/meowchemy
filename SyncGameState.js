@@ -123,7 +123,7 @@ const MeowchemyCloudScript = {
         stages,
       };
     } catch (e) {
-      return { error: "um erro ocorreu" };
+      return { error: e };
     }
   },
 
@@ -197,14 +197,16 @@ const MeowchemyCloudScript = {
     let serverItems = this.getUserInventory();
 
     let serverHash = [];
-    serverItems.map((item) => {
-      serverHash[item.ItemId] = item;
-    });
+    serverItems.length > 0 &&
+      serverItems.map((item) => {
+        serverHash[item.ItemId] = item;
+      });
 
     let clientItems = [];
-    items.map((item) => {
-      clientItems[item.id] = item;
-    });
+    items.length > 0 &&
+      items.map((item) => {
+        clientItems[item.id] = item;
+      });
 
     newItemsToServer = [];
     for (let ItemId in clientItems) {
