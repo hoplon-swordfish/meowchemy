@@ -1,9 +1,9 @@
-var handlers = {};
-var log = {
-  debug: function (text, data) {
-    console.log(text, data);
-  },
-};
+// var handlers = {};
+// var log = {
+//   debug: function (text, data) {
+//     console.log(text, data);
+//   },
+// };
 
 const CloudScriptLib = {
   addVirtualCurrency: function (amountToAdd) {
