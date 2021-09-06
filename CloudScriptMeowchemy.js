@@ -8,7 +8,6 @@ const MeowchemyCloudScript = {
   getCurrentGameState: function () {
     let userData = CloudScriptLib.getUserData([
       "SaveVersion",
-      "Life",
       "TutorialState",
       "Stage0",
       "Stage1",
@@ -18,7 +17,6 @@ const MeowchemyCloudScript = {
 
     try {
       let saveVersion = userData.Data.SaveVersion.Value;
-      let life = userData.Data.Life.Value;
       let tutorialState = userData.Data.TutorialState.Value;
       let coinsAmount = this.getCoinAmount("GP");
 
@@ -42,13 +40,13 @@ const MeowchemyCloudScript = {
 
       return {
         saveVersion,
-        life,
         tutorialState,
         coinsAmount,
         items,
         stages,
       };
     } catch (e) {
+      log.debug(e);
       return { error: e };
     }
   },
