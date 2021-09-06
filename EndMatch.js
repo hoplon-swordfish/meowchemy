@@ -18,7 +18,7 @@ handlers.EndMatch = function (args, context) {
   if (undefined !== args.coinsAmount)
     MeowchemyCloudScript.updateVirtualCurrency(args.coinsAmount);
 
-  if (undefined != args.items)
+  if (undefined !== args.items)
     MeowchemyCloudScript.updateItemsIventory(args.items);
 
   return args;
