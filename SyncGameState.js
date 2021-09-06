@@ -179,8 +179,11 @@ const MeowchemyCloudScript = {
         };
 
         let key = "Stage" + stage.StageId;
-        data[key] = saving;
+        data[key] = JSON.stringify(saving);
       });
+
+      log.debug("saving stages");
+      log.debug(data);
 
       server.UpdateUserData({
         PlayFabId: currentPlayerId,
