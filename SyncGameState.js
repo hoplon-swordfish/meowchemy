@@ -59,6 +59,8 @@ const CloudScriptLib = {
   modifyItemUses: function (itemId, usesToAdd) {
     // return console.log("modifyItemUses", itemId, usesToAdd);
 
+    if (usesToAdd == 0) return null;
+
     return server.ModifyItemUses({
       ItemInstanceId: itemId,
       PlayFabId: currentPlayerId,
