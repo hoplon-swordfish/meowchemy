@@ -52,7 +52,7 @@ const CloudScriptLib = {
     return server.ConsumeItem({
       ConsumeCount: quantity,
       ItemInstanceId: item,
-      PlayFabId = currentPlayerId,
+      PlayFabId: currentPlayerId,
     });
   },
 
