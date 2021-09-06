@@ -3,7 +3,7 @@
 //   debug: function (text, data) {
 //     console.log(text, data);
 //   },
-// };
+};
 
 const CloudScriptLib = {
   addVirtualCurrency: function (amountToAdd) {
@@ -176,9 +176,8 @@ const MeowchemyCloudScript = {
   updateStages: function (stages) {
     log.debug("updateStages");
     log.debug(stages);
+    let data = [];
     try {
-      let data = [];
-
       stages.map((stage) => {
         let saving = {
           StageId: stage.stageId,
@@ -193,12 +192,17 @@ const MeowchemyCloudScript = {
       log.debug("saving stages");
       log.debug(data);
 
-      server.UpdateUserData({
-        PlayFabId: currentPlayerId,
-        Data: data,
-      });
+      if (data.length > 0) {
+        server.UpdateUserData({
+          PlayFabId: currentPlayerId,
+          Data: data,
+        });
+      } else {
+        log.debug("no stages found....");
+      }
     } catch (e) {
-      log.degug("error updateStages");
+      log.debug("error updateStages");
+      log.debug(e);
     }
   },
 
@@ -307,12 +311,12 @@ const MeowchemyCloudScript = {
       return 0;
     }
 
-    log.debug("getCoinAmount => payload");
-    log.degub(payload);
-    log.debug("UserVirtualCurrency");
-    log.debug(payload.UserVirtualCurrency);
-    log.debug("Amount");
-    log.debug(payload.UserVirtualCurrency[coinType]);
+    // log.debug("getCoinAmount => payload");
+    // log.degub(payload);
+    // log.debug("UserVirtualCurrency");
+    // log.debug(payload.UserVirtualCurrency);
+    // log.debug("Amount");
+    // log.debug(payload.UserVirtualCurrency[coinType]);
 
     return payload.UserVirtualCurrency[coinType];
   },
@@ -324,9 +328,9 @@ const MeowchemyCloudScript = {
       return [];
     }
 
-    log.debug("getUserInventory => payload");
-    log.debug(payload);
-    log.debug(payload.UserInventory);
+    // log.debug("getUserInventory => payload");
+    // log.debug(payload);
+    // log.debug(payload.UserInventory);
 
     return payload.UserInventory;
   },
