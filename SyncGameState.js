@@ -6,7 +6,7 @@
 // };
 
 const CloudScriptLib = {
-  addVirtualCurrency: function (amount) {
+  addVirtualCurrency: function (amountToAdd) {
     let resultAdd = server.AddUserVirtualCurrency({
       Amount: amountToAdd,
       PlayFabId: currentPlayerId,
@@ -48,7 +48,7 @@ const CloudScriptLib = {
       };
     }
 
-    log.debug("playerCombinedInfoResult", playerCombinedInfoResult);
+    log.debug("playerCombinedInfoResult");
 
     return playerCombinedInfoResult.InfoResultPayload;
   },
