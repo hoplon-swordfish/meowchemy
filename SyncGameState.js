@@ -220,7 +220,8 @@ const MeowchemyCloudScript = {
         }
       }
     } catch (e) {
-      log.debug("error", e);
+      log.debug("error");
+      log.debug(e);
 
       return e;
     }
