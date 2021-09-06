@@ -48,7 +48,7 @@ const CloudScriptLib = {
       };
     }
 
-    log.debug("playerCombinedInfoResult");
+    // log.debug("playerCombinedInfoResult");
 
     return playerCombinedInfoResult.InfoResultPayload;
   },
@@ -158,11 +158,11 @@ const MeowchemyCloudScript = {
         this.updateVirtualCurrency(args.coinsAmount);
 
       if (undefined !== args.stages && args.stages.length > 0) {
-        let stages = this.updateStages(args.stages);
-        dataPayload["Stage0"] = stages.Stage0;
-        dataPayload["Stage1"] = stages.Stage1;
-        dataPayload["Stage2"] = stages.Stage2;
-        dataPayload["Stage3"] = stages.Stage3;
+        let itemsStageLocal = this.updateStages(args.stages);
+        dataPayload["Stage0"] = itemsStageLocal.Stage0;
+        dataPayload["Stage1"] = itemsStageLocal.Stage1;
+        dataPayload["Stage2"] = itemsStageLocal.Stage2;
+        dataPayload["Stage3"] = itemsStageLocal.Stage3;
       }
 
       server.UpdateUserData({
