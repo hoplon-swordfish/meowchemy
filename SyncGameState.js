@@ -101,10 +101,14 @@ const MeowchemyCloudScript = {
       let coinsAmount = this.getCoinAmount("GP");
 
       let stages = [];
-      stages.push(JSON.parse(userData.Data.Stage0.Value));
-      stages.push(JSON.parse(userData.Data.Stage1.Value));
-      stages.push(JSON.parse(userData.Data.Stage2.Value));
-      stages.push(JSON.parse(userData.Data.Stage3.Value));
+      if (undefined !== userData.Data.Stage0)
+        stages.push(JSON.parse(userData.Data.Stage0.Value));
+      if (undefined !== userData.Data.Stage1)
+        stages.push(JSON.parse(userData.Data.Stage1.Value));
+      if (undefined !== userData.Data.Stage2)
+        stages.push(JSON.parse(userData.Data.Stage2.Value));
+      if (undefined !== userData.Data.Stage3)
+        stages.push(JSON.parse(userData.Data.Stage3.Value));
 
       let localItems = this.getUserInventory();
       let items = localItems.map((item) => {
@@ -252,6 +256,13 @@ const MeowchemyCloudScript = {
   getCoinAmount: function (coinType) {
     let payload = this.combinedInfo;
 
+    if (
+      undefined === payload.UserVirtualCurrency ||
+      undefined === payload.UserVirtualCurrency[coinType]
+    ) {
+      return 0;
+    }
+
     log.debug("payload", payload);
     log.debug("UserVirtualCurrency", payload.UserVirtualCurrency);
     log.debug("Amount", payload.UserVirtualCurrency[coinType]);
@@ -261,6 +272,10 @@ const MeowchemyCloudScript = {
 
   getUserInventory: function () {
     let payload = this.combinedInfo;
+
+    if (undefined === payload.UserInventory) {
+      return [];
+    }
 
     log.debug("payload", payload);
     log.debug(payload.UserInventory);
