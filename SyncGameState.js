@@ -148,6 +148,10 @@ const MeowchemyCloudScript = {
       if (undefined !== args.coinsAmount)
         this.updateVirtualCurrency(args.coinsAmount);
 
+      if (undefined !== args.stages && args.stages.length > 0) {
+        this.updateStages(args.stages);
+      }
+
       server.UpdateUserData({
         PlayFabId: currentPlayerId,
         Data: dataPayload,
@@ -157,6 +161,26 @@ const MeowchemyCloudScript = {
     } catch (e) {
       log.debug(e.name + ": " + e.message);
     }
+  },
+
+  updateStages: function (stages) {
+    try {
+      stages.map((stage) => {
+        let saving = {
+          StageId: stage.stageId,
+          StageItemIndex: stage.stageItemIndex,
+          StageItemProgression: stage.stageItemProgression,
+        };
+        let key = "Stage" + stage.StageId;
+        let data = [];
+        data[key] = saving;
+
+        server.UpdateUserData({
+          PlayFabId: currentPlayerId,
+          Data: data,
+        });
+      });
+    } catch (e) {}
   },
 
   updateVirtualCurrency: function (gameClientCurrencyAmount) {
