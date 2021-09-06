@@ -158,7 +158,11 @@ const MeowchemyCloudScript = {
         this.updateVirtualCurrency(args.coinsAmount);
 
       if (undefined !== args.stages && args.stages.length > 0) {
-        this.updateStages(args.stages);
+        let stages = this.updateStages(args.stages);
+        dataPayload["Stage0"] = stages.Stage0;
+        dataPayload["Stage1"] = stages.Stage1;
+        dataPayload["Stage2"] = stages.Stage2;
+        dataPayload["Stage3"] = stages.Stage3;
       }
 
       server.UpdateUserData({
@@ -167,9 +171,11 @@ const MeowchemyCloudScript = {
       });
 
       log.debug("pass success", args);
+      return true;
     } catch (e) {
       log.debug("error updateSyncGameState");
       log.debug(e);
+      return false;
     }
   },
 
@@ -177,12 +183,7 @@ const MeowchemyCloudScript = {
     log.debug("updateStages");
     log.debug(stages);
 
-    let data = {
-      Stage0: null,
-      Stage1: null,
-      Stage2: null,
-      Stage3: null,
-    };
+    let data = {};
     try {
       stages.map((stage) => {
         let saving = {
@@ -198,11 +199,8 @@ const MeowchemyCloudScript = {
       log.debug("saving stages");
       log.debug(data);
 
-      if (data.Stage0 !== null) {
-        server.UpdateUserData({
-          PlayFabId: currentPlayerId,
-          Data: data,
-        });
+      if (data.Stage0 !== undefined) {
+        return data;
       } else {
         log.debug("no stages found....");
       }
@@ -350,9 +348,11 @@ handlers.SyncGameState = function (args, context) {
   if (
     serverCurrentSaveVersion === null ||
     undefined === serverCurrentSaveVersion.Data ||
-    undefined === serverCurrentSaveVersion.Data.SaveVersion
+    undefined === serverCurrentSaveVersion.Data.SaveVersion ||
+    serverCurrentSaveVersion.Data.SaveVersion < args.saveVersion
   ) {
     MeowchemyCloudScript.updateSyncGameState(args, context);
+
     return args;
   }
 
@@ -367,109 +367,9 @@ handlers.SyncGameState = function (args, context) {
     return currentServerGameState;
   }
 
-  MeowchemyCloudScript.updateSyncGameState(args, context);
-
   return args;
 };
 
-// updateItems = function (serverItems, items) {
-//   // let serverItems = this.getUserInventory();
-
-//   let serverHash = [];
-//   serverItems.map((item) => {
-//     serverHash[item.ItemId] = item;
-//   });
-
-//   let clientItems = [];
-//   items.map((item) => {
-//     clientItems[item.id] = item;
-//   });
-
-//   newItemsToServer = [];
-//   for (let ItemId in clientItems) {
-//     clientItem = clientItems[ItemId];
-
-//     // Client Item found in Server
-//     if (undefined !== serverHash[clientItem.id]) {
-//       const serverItem = serverHash[clientItem.id];
-
-//       // Remove items from Server
-//       // if (clientItem.quantity < serverItem.RemainingUses) {
-//       let consume = clientItem.quantity - serverItem.RemainingUses;
-//       CloudScriptLib.modifyItemUses(serverItem.ItemId, consume);
-//       // consumeItem(serverItem.ItemId, consume);
-//       // }
-
-//       // Add items on Server
-//       // if (clientItem.quantity > serverItem.RemainingUses) {
-//       //   const addqtd = clientItem.quantity - serverItem.RemainingUses;
-//       //   modifyItemUses(serverItem.ItemId, addqtd);
-//       // }
-
-//       // Client Item not found in server
-//     } else {
-//       newItemsToServer.push(clientItem);
-//     }
-//   }
-
-//   //Adding in server
-//   if (newItemsToServer.length > 0) {
-//     let items = [];
-//     newItemsToServer.map((clientItem) => {
-//       for (var i = 0; i < clientItem.quantity; i++) {
-//         items.push(clientItem.id);
-//       }
-//     });
-//     CloudScriptLib.grantItemsToUser(items);
-//   }
-
-//   //Remove from server items not present in client
-//   for (let ItemId in serverHash) {
-//     if (undefined === clientItems[ItemId]) {
-//       removeItem = serverHash[ItemId];
-//       CloudScriptLib.modifyItemUses(
-//         removeItem.ItemId,
-//         removeItem.RemainingUses * -1
-//       );
-//     }
-//   }
-// };
-
-// let serverItems = [
-//   {
-//     ItemId: "96E72FBC-F9A5-4643-9C70-FDCA6828D0A8",
-//     ItemInstanceId: "1F0F86F20944EBFE",
-//     PurchaseDate: "2021-09-03T13:19:21.877Z",
-//     RemainingUses: 1,
-//     CatalogVersion: "Main",
-//     DisplayName: "Boost 02 (Staff)",
-//     UnitCurrency: "GP",
-//     UnitPrice: 110,
-//   },
-//   {
-//     ItemId: "40B122DD-646C-468E-AB75-3D0703D05ED4_",
-//     ItemInstanceId: "358FCF97080E9C30",
-//     PurchaseDate: "2021-09-03T11:41:55.102Z",
-//     RemainingUses: 1,
-//     CatalogVersion: "Main",
-//     DisplayName: "Boost 01 (Potion)",
-//     UnitCurrency: "GP",
-//     UnitPrice: 100,
-//   },
-// ];
-
-// let clientItems = [
-//   {
-//     id: "96E72FBC-F9A5-4643-9C70-FDCA6828D0A8",
-//     quantity: 2,
-//   },
-//   {
-//     id: "40B122DD-646C-468E-AB75-3D0703D05ED4",
-//     quantity: 4,
-//   },
-// ];
-
-// // updateItems(serverItems, clientItems);
 /*
 let args = {
   saveVersion: "6",
