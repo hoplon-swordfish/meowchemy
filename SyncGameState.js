@@ -159,7 +159,8 @@ const MeowchemyCloudScript = {
 
       log.debug("pass success", args);
     } catch (e) {
-      log.debug(e.name + ": " + e.message);
+      log.debug("error updateSyncGameState");
+      log.debug(e);
     }
   },
 
