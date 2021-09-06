@@ -192,7 +192,6 @@ const MeowchemyCloudScript = {
 
       log.debug("saving stages");
       log.debug(data);
-      return false;
 
       server.UpdateUserData({
         PlayFabId: currentPlayerId,
