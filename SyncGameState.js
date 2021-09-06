@@ -1,3 +1,10 @@
+// var handlers = {};
+// var log = {
+//   debug: function (text, data) {
+//     console.log(text, data);
+//   },
+// };
+
 const CloudScriptLib = {
   addVirtualCurrency: function (amount) {
     let resultAdd = server.AddUserVirtualCurrency({
@@ -168,6 +175,7 @@ const MeowchemyCloudScript = {
 
   updateStages: function (stages) {
     log.debug("updateStages");
+    log.debug(stages);
     try {
       let data = [];
 
@@ -178,12 +186,13 @@ const MeowchemyCloudScript = {
           StageItemProgression: stage.stageItemProgression,
         };
 
-        let key = "Stage" + stage.StageId;
-        data[key] = JSON.stringify(saving);
+        let key = "Stage" + stage.stageId;
+        data[key] = saving;
       });
 
       log.debug("saving stages");
       log.debug(data);
+      return false;
 
       server.UpdateUserData({
         PlayFabId: currentPlayerId,
@@ -324,7 +333,6 @@ const MeowchemyCloudScript = {
   },
 };
 
-// handlers = {};
 handlers.SyncGameState = function (args, context) {
   MeowchemyCloudScript.init();
 
@@ -453,3 +461,28 @@ handlers.SyncGameState = function (args, context) {
 // ];
 
 // // updateItems(serverItems, clientItems);
+
+// let stages = [
+//   {
+//     stageId: 0,
+//     stageItemIndex: 0,
+//     stageItemProgression: 0,
+//   },
+//   {
+//     stageId: 1,
+//     stageItemIndex: 1,
+//     stageItemProgression: 500,
+//   },
+//   {
+//     stageId: 2,
+//     stageItemIndex: 0,
+//     stageItemProgression: 500,
+//   },
+//   {
+//     stageId: 3,
+//     stageItemIndex: 0,
+//     stageItemProgression: 50,
+//   },
+// ];
+
+// MeowchemyCloudScript.updateStages(stages);
