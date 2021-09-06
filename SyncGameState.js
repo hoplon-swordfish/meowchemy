@@ -159,11 +159,14 @@ const MeowchemyCloudScript = {
 
       if (undefined !== args.stages && args.stages.length > 0) {
         let itemsStageLocal = this.updateStages(args.stages);
-        dataPayload["Stage0"] = itemsStageLocal.Stage0;
-        dataPayload["Stage1"] = itemsStageLocal.Stage1;
-        dataPayload["Stage2"] = itemsStageLocal.Stage2;
-        dataPayload["Stage3"] = itemsStageLocal.Stage3;
+        dataPayload["Stage0"] = JSON.stringify(itemsStageLocal.Stage0);
+        dataPayload["Stage1"] = JSON.stringify(itemsStageLocal.Stage1);
+        dataPayload["Stage2"] = JSON.stringify(itemsStageLocal.Stage2);
+        dataPayload["Stage3"] = JSON.stringify(itemsStageLocal.Stage3);
       }
+
+      log.debug("dataPayload");
+      log.debug(dataPayload);
 
       server.UpdateUserData({
         PlayFabId: currentPlayerId,
@@ -180,8 +183,8 @@ const MeowchemyCloudScript = {
   },
 
   updateStages: function (stages) {
-    log.debug("updateStages");
-    log.debug(stages);
+    // log.debug("updateStages");
+    // log.debug(stages);
 
     let data = {};
     try {
@@ -196,10 +199,10 @@ const MeowchemyCloudScript = {
         data[key] = saving;
       });
 
-      log.debug("saving stages");
-      log.debug(data);
+      // log.debug(data);
 
       if (data.Stage0 !== undefined) {
+        log.debug("saving stages");
         return data;
       } else {
         log.debug("no stages found....");
