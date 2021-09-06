@@ -1,9 +1,9 @@
-// var handlers = {};
-// var log = {
-//   debug: function (text, data) {
-//     console.log(text, data);
-//   },
-// };
+var handlers = {};
+var log = {
+  debug: function (text, data) {
+    console.log(text, data);
+  },
+};
 
 const CloudScriptLib = {
   addVirtualCurrency: function (amountToAdd) {
@@ -176,7 +176,13 @@ const MeowchemyCloudScript = {
   updateStages: function (stages) {
     log.debug("updateStages");
     log.debug(stages);
-    let data = [];
+
+    let data = {
+      Stage0: null,
+      Stage1: null,
+      Stage2: null,
+      Stage3: null,
+    };
     try {
       stages.map((stage) => {
         let saving = {
@@ -192,7 +198,7 @@ const MeowchemyCloudScript = {
       log.debug("saving stages");
       log.debug(data);
 
-      if (data.length > 0) {
+      if (data.Stage0 !== null) {
         server.UpdateUserData({
           PlayFabId: currentPlayerId,
           Data: data,
@@ -464,28 +470,51 @@ handlers.SyncGameState = function (args, context) {
 // ];
 
 // // updateItems(serverItems, clientItems);
+/*
+let args = {
+  saveVersion: "6",
+  lifeAmount: "8",
+  tutorialState: "-1",
+  coinsAmount: 1830,
+  items: [
+    {
+      id: "40B122DD-646C-468E-AB75-3D0703D05ED4",
+      quantity: 6,
+    },
+  ],
+  stages: [
+    {
+      stageId: 0,
+      stageItemIndex: 0,
+      stageItemProgression: 0,
+    },
+    {
+      stageId: 1,
+      stageItemIndex: 1,
+      stageItemProgression: 500,
+    },
+    {
+      stageId: 2,
+      stageItemIndex: 0,
+      stageItemProgression: 500,
+    },
+    {
+      stageId: 3,
+      stageItemIndex: 0,
+      stageItemProgression: 50,
+    },
+  ],
+};
 
-// let stages = [
-//   {
-//     stageId: 0,
-//     stageItemIndex: 0,
-//     stageItemProgression: 0,
-//   },
-//   {
-//     stageId: 1,
-//     stageItemIndex: 1,
-//     stageItemProgression: 500,
-//   },
-//   {
-//     stageId: 2,
-//     stageItemIndex: 0,
-//     stageItemProgression: 500,
-//   },
-//   {
-//     stageId: 3,
-//     stageItemIndex: 0,
-//     stageItemProgression: 50,
-//   },
-// ];
+MeowchemyCloudScript.updateStages(args.stages);
+let dataPayload = {};
 
-// MeowchemyCloudScript.updateStages(stages);
+if (undefined !== args.lifeAmount) dataPayload["Life"] = args.lifeAmount;
+
+if (undefined !== args.saveVersion)
+  dataPayload["SaveVersion"] = args.saveVersion;
+
+if (undefined !== args.tutorialState)
+  dataPayload["TutorialState"] = args.tutorialState;
+
+*/
