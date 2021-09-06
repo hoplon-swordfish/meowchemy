@@ -183,7 +183,7 @@ const MeowchemyCloudScript = {
   },
 
   updateStages: function (stages) {
-    // log.debug("updateStages");
+    log.debug("updateStages");
     // log.debug(stages);
 
     let data = {};
@@ -199,7 +199,7 @@ const MeowchemyCloudScript = {
         data[key] = saving;
       });
 
-      // log.debug(data);
+      log.debug(data);
 
       if (data.Stage0 !== undefined) {
         log.debug("saving stages");
