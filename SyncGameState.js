@@ -47,32 +47,32 @@ const CloudScriptLib = {
   },
 
   consumeItem: function (item, quantity) {
-    return console.log("consumeItem", item, quantity);
+    // return console.log("consumeItem", item, quantity);
 
-    // server.ConsumeItem({
-    //   ConsumeCount: quantity,
-    //   ItemInstanceId: item,
-    //   PlayFabId = currentPlayerId,
-    // });
+    return server.ConsumeItem({
+      ConsumeCount: quantity,
+      ItemInstanceId: item,
+      PlayFabId = currentPlayerId,
+    });
   },
 
   modifyItemUses: function (itemId, usesToAdd) {
-    return console.log("modifyItemUses", itemId, usesToAdd);
+    // return console.log("modifyItemUses", itemId, usesToAdd);
 
-    // server.ModifyItemUses({
-    //   ItemInstanceId: itemId,
-    //   PlayFabId: currentPlayerId,
-    //   UsesToAdd: usesToAdd,
-    // });
+    return server.ModifyItemUses({
+      ItemInstanceId: itemId,
+      PlayFabId: currentPlayerId,
+      UsesToAdd: usesToAdd,
+    });
   },
 
   grantItemsToUser: function (items) {
-    return console.log("grantItemsToUser", items);
+    // return console.log("grantItemsToUser", items);
 
-    // server.GrantItemsToUser({
-    //   ItemIds: items,
-    //   PlayFabId: currentPlayerId,
-    // });
+    return server.GrantItemsToUser({
+      ItemIds: items,
+      PlayFabId: currentPlayerId,
+    });
   },
 };
 
