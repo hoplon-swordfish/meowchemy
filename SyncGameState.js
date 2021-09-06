@@ -167,6 +167,7 @@ const MeowchemyCloudScript = {
   },
 
   updateStages: function (stages) {
+    log.debug("updateStages");
     try {
       let data = [];
 
@@ -220,7 +221,7 @@ const MeowchemyCloudScript = {
         }
       }
     } catch (e) {
-      log.debug("error");
+      log.debug("error updateVirtualCurrency");
       log.debug(e);
 
       return e;
@@ -295,9 +296,12 @@ const MeowchemyCloudScript = {
       return 0;
     }
 
-    log.debug("payload", payload);
-    log.debug("UserVirtualCurrency", payload.UserVirtualCurrency);
-    log.debug("Amount", payload.UserVirtualCurrency[coinType]);
+    log.debug("getCoinAmount => payload");
+    log.degub(payload);
+    log.debug("UserVirtualCurrency");
+    log.debug(payload.UserVirtualCurrency);
+    log.debug("Amount");
+    log.debug(payload.UserVirtualCurrency[coinType]);
 
     return payload.UserVirtualCurrency[coinType];
   },
@@ -309,7 +313,8 @@ const MeowchemyCloudScript = {
       return [];
     }
 
-    log.debug("payload", payload);
+    log.debug("getUserInventory => payload");
+    log.debug(payload);
     log.debug(payload.UserInventory);
 
     return payload.UserInventory;
