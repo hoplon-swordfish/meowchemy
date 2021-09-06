@@ -77,5 +77,3 @@ const CloudScriptLib = {
     });
   },
 };
-
-export default CloudScriptLib;

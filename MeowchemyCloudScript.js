@@ -259,5 +259,3 @@ const MeowchemyCloudScript = {
     return payload.UserInventory;
   },
 };
-
-export default MeowchemyCloudScript;
