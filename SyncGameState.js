@@ -165,22 +165,26 @@ const MeowchemyCloudScript = {
 
   updateStages: function (stages) {
     try {
+      let data = [];
+
       stages.map((stage) => {
         let saving = {
           StageId: stage.stageId,
           StageItemIndex: stage.stageItemIndex,
           StageItemProgression: stage.stageItemProgression,
         };
-        let key = "Stage" + stage.StageId;
-        let data = [];
-        data[key] = saving;
 
-        server.UpdateUserData({
-          PlayFabId: currentPlayerId,
-          Data: data,
-        });
+        let key = "Stage" + stage.StageId;
+        data[key] = saving;
       });
-    } catch (e) {}
+
+      server.UpdateUserData({
+        PlayFabId: currentPlayerId,
+        Data: data,
+      });
+    } catch (e) {
+      log.degug("error updateStages");
+    }
   },
 
   updateVirtualCurrency: function (gameClientCurrencyAmount) {
