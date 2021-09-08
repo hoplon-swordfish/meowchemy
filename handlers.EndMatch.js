@@ -8,7 +8,7 @@ handlers.EndMatch = function (args, context) {
   stageName = "Stage" + args.stage.stageId;
 
   const dataPayload = {};
-  dataPayload[stageName] = args.stage;
+  dataPayload[stageName] = JSON.stringify(args.stage);
 
   server.UpdateUserData({
     PlayFabId: currentPlayerId,
