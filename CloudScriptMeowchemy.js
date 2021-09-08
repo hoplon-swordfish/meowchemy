@@ -55,8 +55,6 @@ const MeowchemyCloudScript = {
     try {
       let dataPayload = {};
 
-      if (undefined !== args.lifeAmount) dataPayload["Life"] = args.lifeAmount;
-
       if (undefined !== args.saveVersion)
         dataPayload["SaveVersion"] = args.saveVersion;
 
@@ -219,6 +217,31 @@ const MeowchemyCloudScript = {
           removeItem.RemainingUses * -1
         );
       }
+    }
+  },
+
+  updateItemIventory: function (items) {
+    let serverItems = this.getUserInventory();
+
+    let createItems = [];
+    for (let itemClient in items) {
+      let found = false;
+      for (let itemServer in serverItems) {
+        if (itemClient.id == itemServer.ItemId) {
+          let consume = itemClient.quantity - itemServer.RemainingUses;
+          CloudScriptLib.modifyItemUses(itemServer.ItemInstanceId, consume);
+          found = true;
+        }
+      }
+      if (!found) {
+        for (let i = 0; i < itemClient.quantity; i++) {
+          createItems.push(itemClient.id);
+        }
+      }
+    }
+
+    if (createItems.length > 0) {
+      CloudScriptLib.grantItemsToUser(createItems);
     }
   },
 
