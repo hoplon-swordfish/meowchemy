@@ -224,22 +224,26 @@ const MeowchemyCloudScript = {
     let serverItems = this.getUserInventory();
 
     let createItems = [];
-    for (let itemClient in items) {
+    for (let idxC in items) {
+      itemClient = items[idxC];
       let found = false;
-      for (let itemServer in serverItems) {
+
+      for (let idxS in serverItems) {
+        itemServer = serverItems[idxS];
         if (itemClient.id == itemServer.ItemId) {
           let consume = itemClient.quantity - itemServer.RemainingUses;
-          CloudScriptLib.modifyItemUses(itemServer.ItemInstanceId, consume);
+          if (consume != 0) {
+            CloudScriptLib.modifyItemUses(itemServer.ItemInstanceId, consume);
+          }
           found = true;
         }
       }
-      // if (!found) {
-      //   for (let i = 0; i < itemClient.quantity; i++) {
-      //     createItems.push(itemClient.id);
-      //   }
-      // }
+      if (!found) {
+        for (let i = 0; i < itemClient.quantity; i++) {
+          createItems.push(itemClient.id);
+        }
+      }
     }
-
     if (createItems.length > 0) {
       CloudScriptLib.grantItemsToUser(createItems);
     }
