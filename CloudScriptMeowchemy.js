@@ -225,6 +225,8 @@ const MeowchemyCloudScript = {
 
   getCoinAmount: function (coinType) {
     let payload = this.combinedInfo;
+    log.degub("payload");
+    log.degub(payload);
 
     if (
       undefined === payload.UserVirtualCurrency ||
@@ -233,8 +235,8 @@ const MeowchemyCloudScript = {
       return 0;
     }
 
-    log.debug("getCoinAmount => payload");
-    log.degub(payload);
+    // log.debug("getCoinAmount => payload");
+    // log.degub(payload);
     // log.debug("UserVirtualCurrency");
     // log.debug(payload.UserVirtualCurrency);
     // log.debug("Amount");
