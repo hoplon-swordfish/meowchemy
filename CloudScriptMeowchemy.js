@@ -233,11 +233,11 @@ const MeowchemyCloudScript = {
           found = true;
         }
       }
-      if (!found) {
-        for (let i = 0; i < itemClient.quantity; i++) {
-          createItems.push(itemClient.id);
-        }
-      }
+      // if (!found) {
+      //   for (let i = 0; i < itemClient.quantity; i++) {
+      //     createItems.push(itemClient.id);
+      //   }
+      // }
     }
 
     if (createItems.length > 0) {
