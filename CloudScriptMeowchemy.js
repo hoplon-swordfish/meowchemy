@@ -104,9 +104,9 @@ const MeowchemyCloudScript = {
     try {
       stages.map((stage) => {
         let saving = {
-          StageId: stage.stageId,
-          StageItemIndex: stage.stageItemIndex,
-          StageItemProgression: stage.stageItemProgression,
+          stageId: stage.stageId,
+          stageItemIndex: stage.stageItemIndex,
+          stageItemProgression: stage.stageItemProgression,
         };
 
         let key = "Stage" + stage.stageId;
