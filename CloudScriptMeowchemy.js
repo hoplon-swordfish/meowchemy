@@ -192,7 +192,7 @@ const MeowchemyCloudScript = {
 
         // Remove items from Server
         let consume = clientItem.quantity - serverItem.RemainingUses;
-        CloudScriptLib.modifyItemUses(serverItem.ItemId, consume);
+        CloudScriptLib.modifyItemUses(serverItem.ItemInstanceId, consume);
 
         // Client Item not found in server
       } else {
@@ -216,7 +216,7 @@ const MeowchemyCloudScript = {
       if (undefined === clientItems[ItemId]) {
         removeItem = serverHash[ItemId];
         CloudScriptLib.modifyItemUses(
-          removeItem.ItemId,
+          removeItem.ItemInstanceId,
           removeItem.RemainingUses * -1
         );
       }
