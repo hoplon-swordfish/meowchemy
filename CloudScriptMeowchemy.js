@@ -233,8 +233,8 @@ const MeowchemyCloudScript = {
       return 0;
     }
 
-    // log.debug("getCoinAmount => payload");
-    // log.degub(payload);
+    log.debug("getCoinAmount => payload");
+    log.degub(payload);
     // log.debug("UserVirtualCurrency");
     // log.debug(payload.UserVirtualCurrency);
     // log.debug("Amount");
