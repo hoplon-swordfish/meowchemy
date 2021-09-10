@@ -1,4 +1,4 @@
-handlers.ChangeTutorialStats = (args, context) => {
+handlers.ChangeTutorialStats = function (args, context) {
   if (typeof args !== "number") {
     return false;
   }
