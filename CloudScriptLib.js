@@ -1,9 +1,9 @@
 const CloudScriptLib = {
-  addVirtualCurrency: function (amountToAdd) {
+  addVirtualCurrency: function (amountToAdd, currencyCode) {
     let resultAdd = server.AddUserVirtualCurrency({
       Amount: amountToAdd,
       PlayFabId: currentPlayerId,
-      VirtualCurrency: "GP",
+      VirtualCurrency: currencyCode,
     });
     return resultAdd;
   },
