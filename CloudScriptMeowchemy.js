@@ -284,4 +284,19 @@ const MeowchemyCloudScript = {
 
     return payload.UserInventory;
   },
+
+  getLifeMaxStack: function () {
+    return CloudScriptLib.getTitleData(["LifeMaxStack"])
+  },
+
+  getCurrentUserLifeAmount: function () {
+    let result = CloudScriptLib.getUserInventory();
+    if (result === undefined)
+      return 0;
+
+    return result.Inventory.find(element => element.DisplayName === "Life").RemainingUses;
+  },
+
+
+  //getAdRewardCurrencyTime ( user id = currentPlayerId) NextAdRewardCurrencyTime
 };

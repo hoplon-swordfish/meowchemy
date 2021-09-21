@@ -76,4 +76,19 @@ const CloudScriptLib = {
       PlayFabId: currentPlayerId,
     });
   },
+
+  getTitleData: function (keys) {
+    return server.GetTitleData({
+      Keys: keys
+    });
+  },
+
+  getUserInventory: function () {
+    return server.GetUserInventory({
+      PlayFabId: currentPlayerId
+    });
+  }
+
+
+  // send push notification
 };
