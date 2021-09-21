@@ -286,12 +286,16 @@ const MeowchemyCloudScript = {
   },
 
   getLifeMaxStack: function () {
-    return CloudScriptLib.getTitleData(["LifeMaxStack"])
+    let lifeMaxStackData = CloudScriptLib.getTitleData(["LifeMaxStack"]);
+    if (undefined === lifeMaxStackData)
+      return 0;
+
+    return lifeMaxStackData.Data.LifeMaxStack;
   },
 
   getCurrentUserLifeAmount: function () {
     let result = CloudScriptLib.getUserInventory();
-    if (result === undefined)
+    if (undefined === result)
       return 0;
 
     return result.Inventory.find(element => element.DisplayName === "Life").RemainingUses;
