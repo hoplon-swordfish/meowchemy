@@ -87,8 +87,12 @@ const CloudScriptLib = {
     return server.GetUserInventory({
       PlayFabId: currentPlayerId
     });
+  },
+
+  SendPushNotificationFromTemplate: function (pushNotificationTemplateId) {
+    return server.PushNotificationTemplateId({
+      PushNotificationTemplateId: pushNotificationTemplateId,
+      Recipient: currentPlayerId
+    });
   }
-
-
-  // send push notification
 };
