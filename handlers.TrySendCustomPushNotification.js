@@ -2,7 +2,7 @@ handlers.TrySendCustomPushNotification = function (args, context) {
 
     let userLifeAmount = MeowchemyCloudScript.getCurrentUserLifeAmount();
     let userLifeMaxAmount = MeowchemyCloudScript.getLifeMaxStack();
-    var utcNow = ((yourDateObject.getTime() * 10000) + 621355968000000000);
+    let utcNow = ((new Date().getTime() * 10000) + 621355968000000000n);
 
     //log.debug("userLifeAmount");
     //log.debug(userLifeAmount);
@@ -14,9 +14,7 @@ handlers.TrySendCustomPushNotification = function (args, context) {
         CloudScriptLib.SendPushNotificationFromTemplate("6b6a3814-99df-4387-9469-1f4f083a41b6")
     }
 
-    let userNextRewardTime = CloudScriptLib.getUserData([
-        "NextAdRewardCurrencyTime"
-    ]);
+    let userNextRewardTime = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime"]);
 
     log.debug("userNextRewardTime");
     log.debug(userNextRewardTime);
