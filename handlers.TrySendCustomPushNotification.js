@@ -2,7 +2,7 @@ handlers.TrySendCustomPushNotification = function (args, context) {
 
     let userLifeAmount = MeowchemyCloudScript.getCurrentUserLifeAmount();
     let userLifeMaxAmount = MeowchemyCloudScript.getLifeMaxStack();
-    let utcNow = ((new Date().getTime() * 10000) + 621355968000000000n);
+    let utcNow = ((new Date().getTime() * 10000) + 621355968000000000);
 
     //log.debug("userLifeAmount");
     //log.debug(userLifeAmount);
