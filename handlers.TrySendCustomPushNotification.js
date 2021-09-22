@@ -21,9 +21,9 @@ handlers.TrySendCustomPushNotification = function (args, context) {
     log.debug("utcNow");
     log.debug(utcNow);
 
-    log.debug(userNextRewardTime.NextAdRewardCurrencyTime !== undefined);
-    log.debug(userNextRewardTime.NextAdRewardCurrencyTime.Value !== undefined);
-    log.debug(userNextRewardTime.NextAdRewardCurrencyTime.Value < utcNow);
+    log.debug(userNextRewardTime.Data.NextAdRewardCurrencyTime !== undefined);
+    log.debug(userNextRewardTime.Data.NextAdRewardCurrencyTime.Value !== undefined);
+    log.debug(userNextRewardTime.Data.NextAdRewardCurrencyTime.Value < utcNow);
 
 
     if (userNextRewardTime.NextAdRewardCurrencyTime !== undefined
