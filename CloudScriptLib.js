@@ -90,7 +90,7 @@ const CloudScriptLib = {
   },
 
   SendPushNotificationFromTemplate: function (pushNotificationTemplateId) {
-    return server.PushNotificationTemplateId({
+    return server.SendPushNotificationFromTemplate({
       PushNotificationTemplateId: pushNotificationTemplateId,
       Recipient: currentPlayerId
     });
