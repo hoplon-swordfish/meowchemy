@@ -299,8 +299,5 @@ const MeowchemyCloudScript = {
       return 0;
 
     return result.Inventory.find(element => element.DisplayName === "Life").RemainingUses;
-  },
-
-
-  //getAdRewardCurrencyTime ( user id = currentPlayerId) NextAdRewardCurrencyTime
+  },  
 };
