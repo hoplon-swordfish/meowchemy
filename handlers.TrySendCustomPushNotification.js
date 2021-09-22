@@ -26,9 +26,9 @@ handlers.TrySendCustomPushNotification = function (args, context) {
     log.debug(userNextRewardTime.Data.NextAdRewardCurrencyTime.Value < utcNow);
 
 
-    if (userNextRewardTime.NextAdRewardCurrencyTime !== undefined
-        && userNextRewardTime.NextAdRewardCurrencyTime.Value !== undefined
-        && userNextRewardTime.NextAdRewardCurrencyTime.Value < utcNow) {
+    if (userNextRewardTime.Data.NextAdRewardCurrencyTime !== undefined
+        && userNextRewardTime.Data.NextAdRewardCurrencyTime.Value !== undefined
+        && userNextRewardTime.Data.NextAdRewardCurrencyTime.Value < utcNow) {
 
         log.debug("NextAdRewardCurrencyTime is lower then utcNow, sending push notification")
     }
