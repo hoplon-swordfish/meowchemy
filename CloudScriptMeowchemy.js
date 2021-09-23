@@ -16,37 +16,43 @@ const MeowchemyCloudScript = {
       "Stage3",
     ]);
 
-    let saveVersion = userData.Data.SaveVersion.Value;
-    let tutorialState = userData.Data.TutorialState.Value;
-    let progressionLevel = userData.Data.ProgressionLevel.Value;
-    let coinsAmount = this.getCoinAmount("GP");
+    try {
+      let saveVersion = userData.Data.SaveVersion.Value;
+      let tutorialState = userData.Data.TutorialState.Value;
+      let progressionLevel = userData.Data.ProgressionLevel.Value;
+      let coinsAmount = this.getCoinAmount("GP");
+      log.debug("saveVersion: "+ saveVersion + "tutorialState: " + tutorialState + "progressionLevel: " + progressionLevel + "coinsAmount: " + coinsAmount );
 
-    let stages = [];
-    if (undefined !== userData.Data.Stage0)
-      stages.push(JSON.parse(userData.Data.Stage0.Value));
-    if (undefined !== userData.Data.Stage1)
-      stages.push(JSON.parse(userData.Data.Stage1.Value));
-    if (undefined !== userData.Data.Stage2)
-      stages.push(JSON.parse(userData.Data.Stage2.Value));
-    if (undefined !== userData.Data.Stage3)
-      stages.push(JSON.parse(userData.Data.Stage3.Value));
+      let stages = [];
+      if (undefined !== userData.Data.Stage0)
+        stages.push(JSON.parse(userData.Data.Stage0.Value));
+      if (undefined !== userData.Data.Stage1)
+        stages.push(JSON.parse(userData.Data.Stage1.Value));
+      if (undefined !== userData.Data.Stage2)
+        stages.push(JSON.parse(userData.Data.Stage2.Value));
+      if (undefined !== userData.Data.Stage3)
+        stages.push(JSON.parse(userData.Data.Stage3.Value));
 
-    let localItems = this.getUserInventory();
-    let items = localItems.map((item) => {
+      let localItems = this.getUserInventory();
+      let items = localItems.map((item) => {
+        return {
+          id: item.ItemId,
+          quantity: item.RemainingUses,
+        };
+      });
+
       return {
-        id: item.ItemId,
-        quantity: item.RemainingUses,
+        saveVersion,
+        progressionLevel,
+        tutorialState,
+        coinsAmount,
+        items,
+        stages,
       };
-    });
-
-    return {
-      saveVersion,
-      progressionLevel,
-      tutorialState,
-      coinsAmount,
-      items,
-      stages,
-    };
+    } catch (e) {
+      log.debug(e);
+      return { error: e };
+    }
   },
 
   updateSyncGameState: function (args, context) {
