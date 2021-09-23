@@ -9,6 +9,7 @@ const MeowchemyCloudScript = {
     let userData = CloudScriptLib.getUserData([
       "SaveVersion",
       "TutorialState",
+      "ProgressionLevel",
       "Stage0",
       "Stage1",
       "Stage2",
@@ -18,6 +19,7 @@ const MeowchemyCloudScript = {
     try {
       let saveVersion = userData.Data.SaveVersion.Value;
       let tutorialState = userData.Data.TutorialState.Value;
+      let progressionLevel = userData.Data.ProgressionLevel.Value;
       let coinsAmount = this.getCoinAmount("GP");
 
       let stages = [];
@@ -40,6 +42,7 @@ const MeowchemyCloudScript = {
 
       return {
         saveVersion,
+        progressionLevel,
         tutorialState,
         coinsAmount,
         items,
@@ -60,6 +63,9 @@ const MeowchemyCloudScript = {
 
       if (undefined !== args.tutorialState)
         dataPayload["TutorialState"] = args.tutorialState;
+
+      if (undefined !== args.progressionLevel)
+        dataPayload["ProgressionLevel"] = args.progressionLevel;
 
       if (undefined != args.items) this.updateItemsIventory(args.items);
 
