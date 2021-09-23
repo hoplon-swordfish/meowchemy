@@ -79,20 +79,20 @@ const CloudScriptLib = {
 
   getTitleData: function (keys) {
     return server.GetTitleData({
-      Keys: keys
+      Keys: keys,
     });
   },
 
   getUserInventory: function () {
     return server.GetUserInventory({
-      PlayFabId: currentPlayerId
+      PlayFabId: currentPlayerId,
     });
   },
 
   SendPushNotificationFromTemplate: function (pushNotificationTemplateId) {
     return server.SendPushNotificationFromTemplate({
       PushNotificationTemplateId: pushNotificationTemplateId,
-      Recipient: currentPlayerId
+      Recipient: currentPlayerId,
     });
-  }
+  },
 };
