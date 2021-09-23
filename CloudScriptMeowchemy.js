@@ -151,7 +151,7 @@ const MeowchemyCloudScript = {
           // Add
           let amountToAdd = gameClientCurrencyAmount - UserVirtualCurrencyGP;
 
-          CloudScriptLib.addVirtualCurrency(amountToAdd);
+          CloudScriptLib.addVirtualCurrency(amountToAdd, "GP");
         }
       }
     } catch (e) {
@@ -287,17 +287,16 @@ const MeowchemyCloudScript = {
 
   getLifeMaxStack: function () {
     let lifeMaxStackData = CloudScriptLib.getTitleData(["LifeMaxStack"]);
-    if (undefined === lifeMaxStackData)
-      return 0;
+    if (undefined === lifeMaxStackData) return 0;
 
     return lifeMaxStackData.Data.LifeMaxStack;
   },
 
   getCurrentUserLifeAmount: function () {
     let result = CloudScriptLib.getUserInventory();
-    if (undefined === result)
-      return 0;
+    if (undefined === result) return 0;
 
-    return result.Inventory.find(element => element.DisplayName === "Life").RemainingUses;
-  },  
+    return result.Inventory.find((element) => element.DisplayName === "Life")
+      .RemainingUses;
+  },
 };
