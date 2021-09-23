@@ -21,6 +21,7 @@ const MeowchemyCloudScript = {
       let tutorialState = userData.Data.TutorialState.Value;
       let progressionLevel = userData.Data.ProgressionLevel.Value;
       let coinsAmount = this.getCoinAmount("GP");
+      log.debug("saveVersion: "+ saveVersion + "tutorialState: " + tutorialState + "progressionLevel: " + progressionLevel + "coinsAmount: " + coinsAmount );
 
       let stages = [];
       if (undefined !== userData.Data.Stage0)
