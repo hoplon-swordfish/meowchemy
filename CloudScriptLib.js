@@ -1,5 +1,6 @@
 const CloudScriptLib = {
   addVirtualCurrency: function (amountToAdd, currencyCode) {
+    if (amountToAdd === 0) return false;
     let resultAdd = server.AddUserVirtualCurrency({
       Amount: amountToAdd,
       PlayFabId: currentPlayerId,
@@ -9,6 +10,7 @@ const CloudScriptLib = {
   },
 
   subtractVirtualCurrency: function (amountToSubtract, currencyCode) {
+    if (amountToSubtract === 0) return false;
     let resultSubtract = server.SubtractUserVirtualCurrency({
       Amount: amountToSubtract,
       PlayFabId: currentPlayerId,
