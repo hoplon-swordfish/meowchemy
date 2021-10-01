@@ -214,9 +214,10 @@ const MeowchemyCloudScript = {
           items.push(clientItem.id);
         }
       });
-      CloudScriptLib.grantItemsToUser(items);
+      if (items.length > 0) CloudScriptLib.grantItemsToUser(items);
     }
 
+    let removeItem = null;
     //Remove from server items not present in client
     for (let ItemId in serverHash) {
       if (undefined === clientItems[ItemId]) {
