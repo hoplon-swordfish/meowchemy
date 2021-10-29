@@ -10,6 +10,7 @@ const MeowchemyCloudScript = {
       "SaveVersion",
       "TutorialState",
       "ProgressionLevel",
+      "IsStarterPackPurchased",
       "Stage0",
       "Stage1",
       "Stage2",
@@ -22,6 +23,9 @@ const MeowchemyCloudScript = {
       let progressionLevel = 0;
       if (undefined !== userData.Data.ProgressionLevel) {
         progressionLevel = userData.Data.ProgressionLevel.Value;
+      }
+      if (undefined !== userData.Data.IsStarterPackPurchased) {
+        isStarterPackPurchased = userData.Data.IsStarterPackPurchased.Value;
       }
       let coinsAmount = this.getCoinAmount("GP");
 
@@ -48,6 +52,7 @@ const MeowchemyCloudScript = {
         progressionLevel,
         tutorialState,
         coinsAmount,
+        isStarterPackPurchased,
         items,
         stages,
       };
@@ -69,6 +74,9 @@ const MeowchemyCloudScript = {
 
       if (undefined !== args.progressionLevel)
         dataPayload["ProgressionLevel"] = args.progressionLevel;
+        
+      if (undefined !== args.isStarterPackPurchased)
+        dataPayload["IsStarterPackPurchased"] = args.isStarterPackPurchased;
 
       if (undefined != args.items) this.updateItemsIventory(args.items);
 
