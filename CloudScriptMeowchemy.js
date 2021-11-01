@@ -24,6 +24,7 @@ const MeowchemyCloudScript = {
       if (undefined !== userData.Data.ProgressionLevel) {
         progressionLevel = userData.Data.ProgressionLevel.Value;
       }
+      let isStarterPackPurchased = false;
       if (undefined !== userData.Data.IsStarterPackPurchased) {
         isStarterPackPurchased = userData.Data.IsStarterPackPurchased.Value;
       }
@@ -74,7 +75,7 @@ const MeowchemyCloudScript = {
 
       if (undefined !== args.progressionLevel)
         dataPayload["ProgressionLevel"] = args.progressionLevel;
-        
+
       if (undefined !== args.isStarterPackPurchased)
         dataPayload["IsStarterPackPurchased"] = args.isStarterPackPurchased;
 
