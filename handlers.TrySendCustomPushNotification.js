@@ -1,28 +1,42 @@
 handlers.TrySendCustomPushNotification = function (args, context)
 {
-    let lifeMaxStackReachedTemplate = "";
-    let adRewardCurrencyAvaibleTemplate = "";
-    let dataPayload = {};
-
-    if (script.titleId == "8ABEF")
+    try
     {
-        lifeMaxStackReachedTemplate = "6b6a3814-99df-4387-9469-1f4f083a41b6";
-        adRewardCurrencyAvaibleTemplate = "7de32b12-53e4-4e0e-8715-57a014f1adab";
+        let lifeMaxStackReachedTemplate = "";
+        let adRewardCurrencyAvaibleTemplate = "";
+        let dataPayload = {};
 
-    } else if (script.titleId == "57FD5")
-    {
-        lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
-        adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
+        if (script.titleId == "8ABEF")
+        {
+            lifeMaxStackReachedTemplate = "6b6a3814-99df-4387-9469-1f4f083a41b6";
+            adRewardCurrencyAvaibleTemplate = "7de32b12-53e4-4e0e-8715-57a014f1adab";
+
+        } else if (script.titleId == "57FD5")
+        {
+            lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
+            adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
+        }
+
+        let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
+        TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
+        TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
+
+        server.UpdateUserData(
+            {
+                PlayFabId: currentPlayerId,
+                Data: dataPayload,
+            });
     }
+    catch (e)
+    {
+        let rawError = `Raw error message: ${e}`
+        log.error(rawError)
 
-    let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
-    TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
-    TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
-
-    server.UpdateUserData({
-        PlayFabId: currentPlayerId,
-        Data: dataPayload,
-    });
+        let error = e.apiErrorInfo.apiError.error;
+        let errorCode = e.apiErrorInfo.apiError.errorCode;
+        let errorMessage = `API Error: ${error}. Error code: ${errorCode}`;
+        log.error(errorMessage);
+    }
 }
 
 const TrySendCustomPushNotificationFunctions = {
