@@ -356,10 +356,7 @@ const MeowchemyCloudScript = {
   {
     let lifeMaxStackData = CloudScriptLib.getTitleData(["LifeConfig"]);
     if (undefined === lifeMaxStackData) return 0;
-
-    let logMessage = `AYAYA: ${JSON.stringify(lifeMaxStackData)}`;
-    log.info(logMessage);
-    return lifeMaxStackData.Data.Value.LifeConfig.MaxLifeRechargeableStack;
+    return JSON.parse(lifeMaxStackData.Data.LifeConfig).MaxLifeRechargeableStack;
   },
 
   getCurrentUserLifeAmount: function ()
@@ -371,6 +368,3 @@ const MeowchemyCloudScript = {
       .RemainingUses;
   },
 };
-
-//{"NextLifeSupplierCooldownInMinutes":30,"MaxLifeRechargeableStack":4}
-//{"LifeConfig":"{"NextLifeSupplierCooldownInMinutes":30,"MaxLifeRechargeableStack":4}"}
