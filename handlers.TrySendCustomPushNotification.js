@@ -93,7 +93,7 @@ const TrySendCustomPushNotificationFunctions = {
         logMessage = `TrySendAdRewardPushNotification::NextAdRewardCurrencyTime: ${userData.Data.NextAdRewardCurrencyTime.Value} and utcNow: ${utcNow}`;
         log.info(logMessage);
 
-        if (userData.Data.LifeFloodController === undefined
+        if (userData.Data.AdRewardFloodController === undefined
             || userData.Data.AdRewardFloodController.Value === undefined
             || userData.Data.AdRewardFloodController.Value == 0)
         {
