@@ -1,23 +1,21 @@
 handlers.TrySendCustomPushNotification = function (args, context)
 {
-    let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
     let lifeMaxStackReachedTemplate = "";
     let adRewardCurrencyAvaibleTemplate = "";
     let dataPayload = {};
 
     if (script.titleId == "8ABEF")
     {
-
         lifeMaxStackReachedTemplate = "6b6a3814-99df-4387-9469-1f4f083a41b6";
         adRewardCurrencyAvaibleTemplate = "7de32b12-53e4-4e0e-8715-57a014f1adab";
 
     } else if (script.titleId == "57FD5")
     {
-
         lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
         adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
-
     }
+
+    let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
     TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
     TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
 
@@ -49,8 +47,8 @@ const TrySendCustomPushNotificationFunctions = {
     },
     TrySendAdRewardPushNotification: function TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate)
     {
-        if (userData.Data.NextAdRewardCurrencyTime !== undefined
-            && userData.Data.NextAdRewardCurrencyTime.Value !== undefined)
+        if (userData.Data.NextAdRewardCurrencyTime === undefined
+            || userData.Data.NextAdRewardCurrencyTime.Value === undefined)
         {
             return;
         }
