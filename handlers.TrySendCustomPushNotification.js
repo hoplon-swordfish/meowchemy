@@ -7,20 +7,11 @@ handlers.TrySendCustomPushNotification = function (args, context)
         let adRewardCurrencyAvaibleTemplate = "";
         let dataPayload = {};
 
-        if (script.titleId == "8ABEF")
-        {
-            lifeMaxStackReachedTemplate = "6b6a3814-99df-4387-9469-1f4f083a41b6";
-            adRewardCurrencyAvaibleTemplate = "7de32b12-53e4-4e0e-8715-57a014f1adab";
-
-        } else if (script.titleId == "57FD5")
-        {
-            lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
-            adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
-        }
-
         let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
         logMessage = `TrySendCustomPushNotification::userData: ${JSON.stringify(userData)}`;
         log.info(logMessage);
+
+        TrySendCustomPushNotificationFunctions.ResolvePushNotificationTemplateId(lifeMaxStackReachedTemplate, adRewardCurrencyAvaibleTemplate);
 
         TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
         TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
@@ -28,12 +19,7 @@ handlers.TrySendCustomPushNotification = function (args, context)
         logMessage = `TrySendCustomPushNotification::dataPayload: ${JSON.stringify(dataPayload)}`;
         log.info(logMessage);
 
-        if (Object.keys(dataPayload).length)
-            server.UpdateUserData(
-                {
-                    PlayFabId: currentPlayerId,
-                    Data: dataPayload,
-                });
+        TrySendCustomPushNotificationFunctions.TryUpdatePushnotificationFloodController(dataPayload);
     }
     catch (e)
     {
@@ -111,5 +97,27 @@ const TrySendCustomPushNotificationFunctions = {
             logMessage = `TrySendAdRewardPushNotification:: Setting AdRewardFloodController to 0`;
             log.info(logMessage);
         }
+    },
+    ResolvePushNotificationTemplateId: function ResolvePushNotificationTemplateId(lifeMaxStackReachedTemplate, adRewardCurrencyAvaibleTemplate)
+    {
+        if (script.titleId == "8ABEF")
+        {
+            lifeMaxStackReachedTemplate = "6b6a3814-99df-4387-9469-1f4f083a41b6";
+            adRewardCurrencyAvaibleTemplate = "7de32b12-53e4-4e0e-8715-57a014f1adab";
+
+        } else if (script.titleId == "57FD5")
+        {
+            lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
+            adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
+        }
+    },
+    TryUpdatePushnotificationFloodController: function TryUpdatePushnotificationFloodController(dataPayload)
+    {
+        if (Object.keys(dataPayload).length)
+            server.UpdateUserData(
+                {
+                    PlayFabId: currentPlayerId,
+                    Data: dataPayload,
+                });
     }
 }
