@@ -19,13 +19,13 @@ handlers.TrySendCustomPushNotification = function (args, context)
         }
 
         let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
-        logMessage = `userData: ${JSON.stringify(userData)}`;
+        logMessage = `TrySendCustomPushNotification::userData: ${JSON.stringify(userData)}`;
         log.info(logMessage);
 
         TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
         TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
 
-        logMessage = `dataPayload: ${JSON.stringify(dataPayload)}`;
+        logMessage = `TrySendCustomPushNotification::dataPayload: ${JSON.stringify(dataPayload)}`;
         log.info(logMessage);
 
         server.UpdateUserData(
@@ -49,8 +49,12 @@ handlers.TrySendCustomPushNotification = function (args, context)
 const TrySendCustomPushNotificationFunctions = {
     TrySendLifePushNotification: function TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate)
     {
+        let logMessage = ``;
         let userLifeAmount = MeowchemyCloudScript.getCurrentUserLifeAmount();
         let userLifeMaxAmount = MeowchemyCloudScript.getLifeMaxStack();
+
+        logMessage = `TrySendLifePushNotification::userLifeAmount:${userLifeAmount} and TrySendLifePushNotification::userLifeMaxAmount:${userLifeMaxAmount}`;
+        log.info(logMessage);
 
         if (userData.Data.LifeFloodController === undefined
             || userData.Data.LifeFloodController.Value === undefined
@@ -60,21 +64,33 @@ const TrySendCustomPushNotificationFunctions = {
             {
                 CloudScriptLib.SendPushNotificationFromTemplate(lifeMaxStackReachedTemplate)
                 dataPayload["LifeFloodController"] = 1;
+
+                logMessage = `TrySendLifePushNotification::SendPushNotificationFromTemplate and setting LifeFloodController to 1`;
+                log.info(logMessage);
             }
         } else if (userLifeAmount < userLifeMaxAmount)
         {
             dataPayload["LifeFloodController"] = 0;
+            logMessage = `TrySendLifePushNotification:: Setting LifeFloodController to 0`;
+            log.info(logMessage);
         }
     },
     TrySendAdRewardPushNotification: function TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate)
     {
+        let logMessage = ``;
+
         if (userData.Data.NextAdRewardCurrencyTime === undefined
             || userData.Data.NextAdRewardCurrencyTime.Value === undefined)
         {
+            logMessage = `TrySendAdRewardPushNotification::NextAdRewardCurrencyTime not found, impossible to evaluate`;
+            log.info(logMessage);
             return;
         }
 
         let utcNow = ((new Date().getTime() * 10000) + 621355968000000000);
+
+        logMessage = `TrySendAdRewardPushNotification::NextAdRewardCurrencyTime: ${userData.Data.NextAdRewardCurrencyTime.Value} and utcNow: ${utcNow}`;
+        log.info(logMessage);
 
         if (userData.Data.LifeFloodController === undefined
             || userData.Data.AdRewardFloodController.Value === undefined
@@ -84,10 +100,15 @@ const TrySendCustomPushNotificationFunctions = {
             {
                 CloudScriptLib.SendPushNotificationFromTemplate(adRewardCurrencyAvaibleTemplate)
                 dataPayload["AdRewardFloodController"] = 1;
+
+                logMessage = `TrySendAdRewardPushNotification::SendPushNotificationFromTemplate and setting AdRewardFloodController to 1`;
+                log.info(logMessage);
             }
         } else if (userData.Data.NextAdRewardCurrencyTime.Value > utcNow)
         {
             dataPayload["AdRewardFloodController"] = 0;
+            logMessage = `TrySendAdRewardPushNotification:: Setting AdRewardFloodController to 0`;
+            log.info(logMessage);
         }
     }
 }
