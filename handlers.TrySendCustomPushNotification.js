@@ -19,13 +19,13 @@ handlers.TrySendCustomPushNotification = function (args, context)
         }
 
         let userData = CloudScriptLib.getUserData(["NextAdRewardCurrencyTime", "LifeFloodController", "AdRewardFloodController"]);
-        logMessage = `userData: ${userData}`;
+        logMessage = `userData: ${JSON.stringify(userData)}`;
         log.info(logMessage);
 
         TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
         TrySendCustomPushNotificationFunctions.TrySendAdRewardPushNotification(userData, dataPayload, adRewardCurrencyAvaibleTemplate);
 
-        logMessage = `dataPayload: ${dataPayload}`;
+        logMessage = `dataPayload: ${JSON.stringify(dataPayload)}`;
         log.info(logMessage);
 
         server.UpdateUserData(
