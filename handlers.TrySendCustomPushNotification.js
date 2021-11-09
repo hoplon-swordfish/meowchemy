@@ -28,11 +28,12 @@ handlers.TrySendCustomPushNotification = function (args, context)
         logMessage = `TrySendCustomPushNotification::dataPayload: ${JSON.stringify(dataPayload)}`;
         log.info(logMessage);
 
-        server.UpdateUserData(
-            {
-                PlayFabId: currentPlayerId,
-                Data: dataPayload,
-            });
+        if (Object.keys(dataPayload).length)
+            server.UpdateUserData(
+                {
+                    PlayFabId: currentPlayerId,
+                    Data: dataPayload,
+                });
     }
     catch (e)
     {
