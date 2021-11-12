@@ -14,7 +14,7 @@ handlers.QueueGiftToUser  = function (args, context)
         log.info(logMessage);
 
         let ServerGiftQueue = CloudScriptLib.getUserData(["GiftQueue"]);
-        logMessage = `QueueGiftToUser::GiftQueue: ${JSON.stringify(GiftQueue)}`;
+        logMessage = `QueueGiftToUser::ServerGiftQueue: ${JSON.stringify(ServerGiftQueue)}`;
         log.info(logMessage);
 
         let GiftQueue = [];
