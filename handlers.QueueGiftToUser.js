@@ -5,7 +5,7 @@
         GiftItemAmount: n
     }
 */
-handlers.handlers.QueueGiftToUser = function (args, context)
+handlers.QueueGiftToUser  = function (args, context)
 {
     try
     {
