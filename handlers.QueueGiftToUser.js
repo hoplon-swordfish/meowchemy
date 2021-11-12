@@ -5,7 +5,7 @@
         GiftItemAmount: n
     }
 */
-handlers.QueueGiftToUser  = function (args, context)
+handlers.QueueGiftToUser = function (args, context)
 {
     try
     {
@@ -20,7 +20,7 @@ handlers.QueueGiftToUser  = function (args, context)
         let GiftQueue = [];
         if (ServerGiftQueue.Data.GiftQueue !== undefined
             && ServerGiftQueue.Data.GiftQueue.Value !== undefined)
-            GiftQueue = ServerGiftQueue.Data.GiftQueue.Value;
+            GiftQueue = JSON.parse(ServerGiftQueue.Data.GiftQueue.Value);
 
         GiftQueue.push(
             {
@@ -35,7 +35,7 @@ handlers.QueueGiftToUser  = function (args, context)
         server.UpdateUserData(
             {
                 PlayFabId: currentPlayerId,
-                Data: { "GiftQueue": GiftQueue }
+                Data: { "GiftQueue": JSON.stringify(GiftQueue) }
             });
     }
     catch (e)
