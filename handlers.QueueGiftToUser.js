@@ -18,12 +18,12 @@ handlers.QueueGiftToUser = function (args, context)
         logMessage = `QueueGiftToUser::ServerGiftQueue: ${JSON.stringify(ServerGiftQueue)}`;
         log.info(logMessage);
 
-        let GiftQueue = [];
+        let GiftQueue = { GiftCollection =[] };
         if (ServerGiftQueue.Data.GiftQueue !== undefined
             && ServerGiftQueue.Data.GiftQueue.Value !== undefined)
             GiftQueue = JSON.parse(ServerGiftQueue.Data.GiftQueue.Value);
 
-        GiftQueue.push(
+        GiftQueue.GiftCollection.push(
             {
                 GiftItemId: args.GiftItemId,
                 GiftItemAmount: args.GiftItemAmount,
