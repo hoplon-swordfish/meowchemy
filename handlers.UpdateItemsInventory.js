@@ -1,5 +1,5 @@
 // GrantItemsToUser => UpdateItemsIventory
-handlers.UpdateItemsIventory = function (args, context) {
+handlers.UpdateItemsInventory = function (args, context) {
   MeowchemyCloudScript.init();
 
   if (!Array.isArray(args)) {
