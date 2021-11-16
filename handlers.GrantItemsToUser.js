@@ -5,7 +5,5 @@ handlers.GrantItemsToUser = function (args, context) {
     return false;
   }
 
-  MeowchemyCloudScript.updateItemIventory(args);
-
-  return args;
+  CloudScriptLib.grantItemsToUser(args);
 };
