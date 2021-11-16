@@ -6,5 +6,5 @@ handlers.UpdateItemsInventory = function (args, context) {
     return false;
   }
 
-  MeowchemyCloudScript.updateItemIventory(args);
+  MeowchemyCloudScript.updateItemInventory(args);
 };

@@ -1,13 +1,11 @@
 const MeowchemyCloudScript = {
   combinedInfo: null,
 
-  init: function ()
-  {
+  init: function () {
     this.combinedInfo = CloudScriptLib.getCombinedInfo();
   },
 
-  getCurrentGameState: function ()
-  {
+  getCurrentGameState: function () {
     let userData = CloudScriptLib.getUserData([
       "SaveVersion",
       "TutorialState",
@@ -19,18 +17,15 @@ const MeowchemyCloudScript = {
       "Stage3",
     ]);
 
-    try
-    {
+    try {
       let saveVersion = userData.Data.SaveVersion.Value;
       let tutorialState = userData.Data.TutorialState.Value;
       let progressionLevel = 0;
-      if (undefined !== userData.Data.ProgressionLevel)
-      {
+      if (undefined !== userData.Data.ProgressionLevel) {
         progressionLevel = userData.Data.ProgressionLevel.Value;
       }
       let isStarterPackPurchased = false;
-      if (undefined !== userData.Data.IsStarterPackPurchased)
-      {
+      if (undefined !== userData.Data.IsStarterPackPurchased) {
         isStarterPackPurchased = userData.Data.IsStarterPackPurchased.Value;
       }
       let coinsAmount = this.getCoinAmount("GP");
@@ -46,8 +41,7 @@ const MeowchemyCloudScript = {
         stages.push(JSON.parse(userData.Data.Stage3.Value));
 
       let localItems = this.getUserInventory();
-      let items = localItems.map((item) =>
-      {
+      let items = localItems.map((item) => {
         return {
           id: item.ItemId,
           quantity: item.RemainingUses,
@@ -63,17 +57,14 @@ const MeowchemyCloudScript = {
         items,
         stages,
       };
-    } catch (e)
-    {
+    } catch (e) {
       log.debug(e);
       return { error: e };
     }
   },
 
-  updateSyncGameState: function (args, context)
-  {
-    try
-    {
+  updateSyncGameState: function (args, context) {
+    try {
       let dataPayload = {};
 
       if (undefined !== args.saveVersion)
@@ -93,11 +84,9 @@ const MeowchemyCloudScript = {
       if (undefined !== args.coinsAmount)
         this.updateVirtualCurrency(args.coinsAmount);
 
-      if (undefined !== args.stages && args.stages.length > 0)
-      {
+      if (undefined !== args.stages && args.stages.length > 0) {
         let itemsStageLocal = this.updateStages(args.stages);
-        if (undefined !== itemsStageLocal.Stage0)
-        {
+        if (undefined !== itemsStageLocal.Stage0) {
           dataPayload["Stage0"] = JSON.stringify(itemsStageLocal.Stage0);
           dataPayload["Stage1"] = JSON.stringify(itemsStageLocal.Stage1);
           dataPayload["Stage2"] = JSON.stringify(itemsStageLocal.Stage2);
@@ -116,24 +105,20 @@ const MeowchemyCloudScript = {
       log.debug("pass success");
 
       return args;
-    } catch (e)
-    {
+    } catch (e) {
       log.debug("error updateSyncGameState");
       log.debug(e);
       return false;
     }
   },
 
-  updateStages: function (stages)
-  {
+  updateStages: function (stages) {
     log.debug("updateStages");
     // log.debug(stages);
 
     let data = {};
-    try
-    {
-      stages.map((stage) =>
-      {
+    try {
+      stages.map((stage) => {
         let saving = {
           stageId: stage.stageId,
           stageItemIndex: stage.stageItemIndex,
@@ -146,38 +131,30 @@ const MeowchemyCloudScript = {
 
       // log.debug(data);
 
-      if (data.Stage0 !== undefined)
-      {
+      if (data.Stage0 !== undefined) {
         log.debug("saving stages");
         return data;
-      } else
-      {
+      } else {
         log.debug("no stages found....");
         return data;
       }
-    } catch (e)
-    {
+    } catch (e) {
       log.debug("error updateStages");
       log.debug(e);
       return data;
     }
   },
 
-  updateVirtualCurrency: function (gameClientCurrencyAmount)
-  {
-    try
-    {
+  updateVirtualCurrency: function (gameClientCurrencyAmount) {
+    try {
       let UserVirtualCurrencyGP = this.getCoinAmount("GP");
 
-      if (undefined !== UserVirtualCurrencyGP)
-      {
-        if (UserVirtualCurrencyGP == gameClientCurrencyAmount)
-        {
+      if (undefined !== UserVirtualCurrencyGP) {
+        if (UserVirtualCurrencyGP == gameClientCurrencyAmount) {
           return true;
         }
 
-        if (UserVirtualCurrencyGP > gameClientCurrencyAmount)
-        {
+        if (UserVirtualCurrencyGP > gameClientCurrencyAmount) {
           // Subtract
           let amountToSubtract =
             UserVirtualCurrencyGP - gameClientCurrencyAmount;
@@ -188,16 +165,14 @@ const MeowchemyCloudScript = {
           );
 
           log.debug(resultSubtract);
-        } else
-        {
+        } else {
           // Add
           let amountToAdd = gameClientCurrencyAmount - UserVirtualCurrencyGP;
 
           CloudScriptLib.addVirtualCurrency(amountToAdd, "GP");
         }
       }
-    } catch (e)
-    {
+    } catch (e) {
       log.debug("error updateVirtualCurrency");
       log.debug(e);
 
@@ -207,32 +182,27 @@ const MeowchemyCloudScript = {
     return true;
   },
 
-  updateItemsIventory: function (items)
-  {
+  updateItemsIventory: function (items) {
     let serverItems = this.getUserInventory();
 
     let serverHash = [];
     serverItems.length > 0 &&
-      serverItems.map((item) =>
-      {
+      serverItems.map((item) => {
         serverHash[item.ItemId] = item;
       });
 
     let clientItems = [];
     items.length > 0 &&
-      items.map((item) =>
-      {
+      items.map((item) => {
         clientItems[item.id] = item;
       });
 
     newItemsToServer = [];
-    for (let ItemId in clientItems)
-    {
+    for (let ItemId in clientItems) {
       clientItem = clientItems[ItemId];
 
       // Client Item found in Server
-      if (undefined !== serverHash[clientItem.id])
-      {
+      if (undefined !== serverHash[clientItem.id]) {
         const serverItem = serverHash[clientItem.id];
 
         // Remove items from Server
@@ -240,20 +210,16 @@ const MeowchemyCloudScript = {
         CloudScriptLib.modifyItemUses(serverItem.ItemInstanceId, consume);
 
         // Client Item not found in server
-      } else
-      {
+      } else {
         newItemsToServer.push(clientItem);
       }
     }
 
     //Adding in server
-    if (newItemsToServer.length > 0)
-    {
+    if (newItemsToServer.length > 0) {
       let items = [];
-      newItemsToServer.map((clientItem) =>
-      {
-        for (var i = 0; i < clientItem.quantity; i++)
-        {
+      newItemsToServer.map((clientItem) => {
+        for (var i = 0; i < clientItem.quantity; i++) {
           items.push(clientItem.id);
         }
       });
@@ -262,10 +228,8 @@ const MeowchemyCloudScript = {
 
     let removeItem = null;
     //Remove from server items not present in client
-    for (let ItemId in serverHash)
-    {
-      if (undefined === clientItems[ItemId])
-      {
+    for (let ItemId in serverHash) {
+      if (undefined === clientItems[ItemId]) {
         removeItem = serverHash[ItemId];
         CloudScriptLib.modifyItemUses(
           removeItem.ItemInstanceId,
@@ -275,45 +239,36 @@ const MeowchemyCloudScript = {
     }
   },
 
-  updateItemIventory: function (items)
-  {
+  updateItemInventory: function (items) {
     let serverItems = this.getUserInventory();
 
     let createItems = [];
-    for (let idxC in items)
-    {
+    for (let idxC in items) {
       itemClient = items[idxC];
       let found = false;
 
-      for (let idxS in serverItems)
-      {
+      for (let idxS in serverItems) {
         itemServer = serverItems[idxS];
-        if (itemClient.id == itemServer.ItemId)
-        {
+        if (itemClient.id == itemServer.ItemId) {
           let consume = itemClient.quantity - itemServer.RemainingUses;
-          if (consume != 0)
-          {
+          if (consume != 0) {
             CloudScriptLib.modifyItemUses(itemServer.ItemInstanceId, consume);
           }
           found = true;
         }
       }
-      if (!found)
-      {
-        for (let i = 0; i < itemClient.quantity; i++)
-        {
+      if (!found) {
+        for (let i = 0; i < itemClient.quantity; i++) {
           createItems.push(itemClient.id);
         }
       }
     }
-    if (createItems.length > 0)
-    {
+    if (createItems.length > 0) {
       CloudScriptLib.grantItemsToUser(createItems);
     }
   },
 
-  getCoinAmount: function (coinType)
-  {
+  getCoinAmount: function (coinType) {
     let payload = this.combinedInfo;
     // log.debug("payload");
     // log.debug(payload);
@@ -321,8 +276,7 @@ const MeowchemyCloudScript = {
     if (
       undefined === payload.UserVirtualCurrency ||
       undefined === payload.UserVirtualCurrency[coinType]
-    )
-    {
+    ) {
       return 0;
     }
 
@@ -336,12 +290,10 @@ const MeowchemyCloudScript = {
     return payload.UserVirtualCurrency[coinType];
   },
 
-  getUserInventory: function ()
-  {
+  getUserInventory: function () {
     let payload = this.combinedInfo;
 
-    if (undefined === payload.UserInventory)
-    {
+    if (undefined === payload.UserInventory) {
       return [];
     }
 
@@ -352,15 +304,14 @@ const MeowchemyCloudScript = {
     return payload.UserInventory;
   },
 
-  getLifeMaxStack: function ()
-  {
+  getLifeMaxStack: function () {
     let lifeMaxStackData = CloudScriptLib.getTitleData(["LifeConfig"]);
     if (undefined === lifeMaxStackData) return 0;
-    return JSON.parse(lifeMaxStackData.Data.LifeConfig).MaxLifeRechargeableStack;
+    return JSON.parse(lifeMaxStackData.Data.LifeConfig)
+      .MaxLifeRechargeableStack;
   },
 
-  getCurrentUserLifeAmount: function ()
-  {
+  getCurrentUserLifeAmount: function () {
     let result = CloudScriptLib.getUserInventory();
     if (undefined === result) return 0;
 
