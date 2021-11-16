@@ -2,7 +2,8 @@
     args
     {
         GiftItemId: xxx,
-        GiftItemAmount: n
+        GiftItemAmount: n,
+        GiftExpirationDate: 2000-12-31
     }
 */
 handlers.QueueGiftToUser = function (args, context)
@@ -25,7 +26,8 @@ handlers.QueueGiftToUser = function (args, context)
         GiftQueue.push(
             {
                 GiftItemId: args.GiftItemId,
-                GiftItemAmount: args.GiftItemAmount
+                GiftItemAmount: args.GiftItemAmount,
+                GiftExpirationDate: args.GiftExpirationDate
             }
         );
 
