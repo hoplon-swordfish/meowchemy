@@ -20,6 +20,11 @@ handlers.TrySendCustomPushNotification = function (args, context)
         {
             lifeMaxStackReachedTemplate = "a43a3366-2f3f-48b6-bbde-3439a5664df1";
             adRewardCurrencyAvaibleTemplate = "f5b0776f-c2cf-447b-9610-5de86a1545f2";
+
+        } else if (script.titleId == "EAFEB")
+        {
+            lifeMaxStackReachedTemplate = "25de0c79-c3a1-4c6a-9b04-cacb2951b49e";
+            adRewardCurrencyAvaibleTemplate = "b55c72c1-c70c-4757-8b9e-3e4d9f99b1f3";
         }
 
         TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
