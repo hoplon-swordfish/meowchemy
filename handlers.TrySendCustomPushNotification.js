@@ -23,8 +23,8 @@ handlers.TrySendCustomPushNotification = function (args, context)
 
         } else if (script.titleId == "EAFEB")
         {
-            lifeMaxStackReachedTemplate = "25de0c79-c3a1-4c6a-9b04-cacb2951b49e";
-            adRewardCurrencyAvaibleTemplate = "b55c72c1-c70c-4757-8b9e-3e4d9f99b1f3";
+            lifeMaxStackReachedTemplate = "b55c72c1-c70c-4757-8b9e-3e4d9f99b1f3";
+            adRewardCurrencyAvaibleTemplate = "25de0c79-c3a1-4c6a-9b04-cacb2951b49e";
         }
 
         TrySendCustomPushNotificationFunctions.TrySendLifePushNotification(userData, dataPayload, lifeMaxStackReachedTemplate);
