@@ -219,7 +219,7 @@ const MeowchemyCloudScript = {
     if (newItemsToServer.length > 0) {
       let items = [];
       newItemsToServer.map((clientItem) => {
-        for (var i = 0; i < clientItem.quantity; i++) {
+        for (var i = 1; i < clientItem.quantity; i++) {
           items.push(clientItem.id);
         }
       });
@@ -258,7 +258,7 @@ const MeowchemyCloudScript = {
         }
       }
       if (!found) {
-        for (let i = 0; i < itemClient.quantity; i++) {
+        for (let i = 1; i < itemClient.quantity; i++) {
           createItems.push(itemClient.id);
         }
       }
