@@ -15,12 +15,8 @@ handlers.SyncGameState = function (args, context) {
 
   let currentSaveVersion = serverCurrentSaveVersion.Data.SaveVersion.Value;
 
-  if (currentSaveVersion == args.saveVersion) {
-    return args;
-  }
-
-  if (currentSaveVersion > args.saveVersion) {
-    log.debug(currentSaveVersion + " " + args.saveVersion);
+  if (currentSaveVersion >= args.saveVersion) {
+    // log.debug(currentSaveVersion + " " + args.saveVersion);
 
     let currentServerGameState = MeowchemyCloudScript.getCurrentGameState();
     return currentServerGameState;
