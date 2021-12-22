@@ -3,6 +3,7 @@ handlers.EndMatch = function (args, context) {
   // lifeItem	    Item
   // coinsAmount	int
   // progressionLevel int
+  // currentLevelAttempts int
 
   MeowchemyCloudScript.init();
 
@@ -14,6 +15,10 @@ handlers.EndMatch = function (args, context) {
 
   if (undefined !== args.progressionLevel) {
     dataPayload["ProgressionLevel"] = args.progressionLevel;
+  }
+
+  if (undefined !== args.currentLevelAttempts) {
+    dataPayload["CurrentLevelAttempts"] = args.currentLevelAttempts;
   }
 
   server.UpdateUserData({
